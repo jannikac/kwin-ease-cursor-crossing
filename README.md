@@ -9,7 +9,10 @@ KWin clamps the cursor to the current output's edge when the position beyond it 
 
 ## Requirements
 
-- KWin (Wayland) — built and tested against **KWin 6.6.5** on Arch Linux
+- KWin (Wayland) — builds against **KWin 6.5 and 6.6** from the same source; tested
+  against 6.6.5 on Arch Linux. The 6.5/6.6 API differences are small enough for type
+  deduction to absorb; future KWin versions may change the private API in ways that
+  require explicit handling (e.g. version checks in CMake with `#ifdef`s in the code)
 - The plugin uses KWin's private API, which has no ABI stability: **rebuild it after
   every KWin update** (typically each Plasma release)
 - Build deps: `cmake`, `extra-cmake-modules`, `kwin` (Arch ships the private headers in
