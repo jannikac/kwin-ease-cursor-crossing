@@ -19,7 +19,7 @@ KWin clamps the cursor to the current output's edge when the position beyond it 
 
 ### Arch Linux
 
-The repo ships a `PKGBUILD` that builds a proper pacman package from the working tree:
+The repo ships a `PKGBUILD` that builds a pacman package from the working tree:
 
 ```sh
 cd dist/arch
@@ -29,12 +29,6 @@ makepkg -si
 (`makepkg -si` builds the package and installs it via pacman in one step; use
 `makepkg -f` to rebuild after source changes, then `sudo pacman -U
 kwin-ease-cursor-crossing-*.pkg.tar.zst`.)
-
-Installing as a package means pacman tracks every file — uninstall cleanly with:
-
-```sh
-sudo pacman -R kwin-ease-cursor-crossing
-```
 
 Remember to rebuild and reinstall the package after every `kwin` update (see
 Requirements).
