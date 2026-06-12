@@ -18,7 +18,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Qml Quick)
 find_package(KF6 REQUIRED COMPONENTS Config CoreAddons KCMUtils)
 # supported KWin range; the private API may change in any minor release, so widen
 # this only after verifying the build (see README "Requirements")
-find_package(KWin 6.5...<6.7 REQUIRED)
+find_package(KWin 6.3...<6.7 REQUIRED)
 
 add_subdirectory(kcm)
 

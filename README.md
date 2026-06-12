@@ -19,12 +19,12 @@ KWin clamps the cursor to the current output's edge when the position beyond it 
 
 ### KWin compatibility
 
-| Plugin version | KWin      |
-| -------------- | --------- |
-| 0.1.x          | 6.5 – 6.6 |
+| Plugin version | KWin      | Verified on                                              |
+| -------------- | --------- | -------------------------------------------------------- |
+| 0.1.x          | 6.3 – 6.6 | 6.6.5 (Arch), 6.5 (NixOS), 6.4 (Kubuntu), 6.3 (Debian)   |
 
-The 6.5/6.6 API differences are small enough for type deduction to absorb, so one
-source tree covers the whole range. Future KWin versions may change the private API
+The API differences across 6.3–6.6 are small enough for type deduction to absorb,
+so one source tree covers the whole range. Future KWin versions may change the private API
 in ways that need explicit handling (version checks in CMake plus `#ifdef`s); the
 supported range lives in the `find_package(KWin ...)` call in `CMakeLists.txt` and
 should be widened only after verifying the build against the new release.
@@ -108,10 +108,9 @@ sudo apt install ./kwin-ease-cursor-crossing_*.deb
 
 Runtime dependencies are resolved automatically from the linked libraries
 (`dpkg-shlibdeps`), and `apt` tracks the installed files — uninstall with
-`sudo apt remove kwin-ease-cursor-crossing`. Note that Plasma 6.5+ is only
-available in newer releases (Debian 14/forky, recent Ubuntu/Neon); if `apt`
-cannot find `kwin-dev`, your release likely ships a KWin older than the
-supported range.
+`sudo apt remove kwin-ease-cursor-crossing`. If `apt` cannot find `kwin-dev`,
+your release likely ships a KWin older than the supported range (see the
+compatibility table).
 
 ### Install from source
 
