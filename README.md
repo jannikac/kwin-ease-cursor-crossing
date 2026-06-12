@@ -33,6 +33,27 @@ kwin-ease-cursor-crossing-*.pkg.tar.zst`.)
 Remember to rebuild and reinstall the package after every `kwin` update (see
 Requirements).
 
+### NixOS
+
+The repo ships a Nix expression under `dist/nixos`.
+
+Test-build it standalone:
+
+```sh
+nix-build dist/nixos
+# result/lib/qt-6/plugins/kwin/plugins/easecursorcrossing.so
+```
+
+To install, add the package to your `configuration.nix`:
+
+```nix
+environment.systemPackages = [
+  (pkgs.kdePackages.callPackage /path/to/kwin-ease-cursor-crossing/dist/nixos/package.nix { })
+];
+```
+
+then `sudo nixos-rebuild switch` and log out/in. 
+
 ### Install from source
 
 ```sh
@@ -43,10 +64,11 @@ sudo cmake --install build
 
 ### What gets installed
 
-Both methods install `/usr/lib/qt6/plugins/kwin/plugins/easecursorcrossing.so` (the
+All methods install `lib/qt6/plugins/kwin/plugins/easecursorcrossing.so` (the
 KWin plugin, next to KWin's built-in plugins) and
-`/usr/lib/qt6/plugins/plasma/kcms/systemsettings/kcm_easecursorcrossing.so` (the
-System Settings module). Then restart KWin (log out/in) — or load the plugin into the
+`lib/qt6/plugins/plasma/kcms/systemsettings/kcm_easecursorcrossing.so` (the
+System Settings module) — under `/usr` on Arch, under the package's store path
+(plugin dir `lib/qt-6/plugins`) on NixOS. Then restart KWin (log out/in) — or load the plugin into the
 running session without restarting:
 
 ```sh
