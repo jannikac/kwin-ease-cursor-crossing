@@ -5,3 +5,6 @@ build/
 dist/arch/src/
 dist/arch/pkg/
 dist/arch/*.pkg.tar.*
+
+# cpack artifacts
+*.deb
