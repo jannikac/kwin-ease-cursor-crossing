@@ -180,6 +180,45 @@ Threshold=15
 Mode=proportional
 ```
 
+## Testing
+
+The repo ships an automated end-to-end test that needs no second display:
+
+```sh
+./tests/run.sh
+```
+
+It builds the plugin, starts a sandboxed headless KWin (`--virtual`) with two
+virtual outputs arranged so part of their shared edge is a deadzone, injects
+pointer motion through KWin's `org_kde_kwin_fake_input` protocol (the small
+client in `tests/fakeinput.c` is compiled on the fly against the vendored
+`tests/fake-input.xml`), and asserts on the plugin's debug log. It exercises:
+
+- a push through the deadzone warps to the expected point on the other screen
+- a push through an aligned edge crosses natively without the plugin acting
+- a push at an edge with no screen beyond does not warp
+- a config change via change notification (`kwriteconfig6 --notify`, the same
+  mechanism the System Settings module uses) is picked up live, and the
+  disabled plugin stops easing
+
+The sandboxed compositor runs with a throwaway `XDG_CONFIG_HOME` and its own
+Wayland socket, so the running session and the user's config are never touched
+(`KWIN_WAYLAND_NO_PERMISSION_CHECKS=1` applies only to that throwaway
+instance).
+
+Prerequisites beyond the build deps: the wayland development files
+(`libwayland-dev` on Debian/Ubuntu, included with `wayland` on Arch) for
+`wayland-scanner` and the client library, plus `kscreen-doctor` and
+`kwriteconfig6`, which ship with any Plasma desktop. The test must run inside
+a user session (it needs `XDG_RUNTIME_DIR` and a session D-Bus); in a bare
+container wrap it with `dbus-run-session`.
+
+For interactive testing without a second monitor, the same setup works nested
+and visible: `kwin_wayland --width 1280 --height 720 --output-count 2 --socket
+wayland-test` opens each output as a window in the running session, and
+`WAYLAND_DISPLAY=wayland-test kscreen-doctor output.WL-1.position.1280,300`
+misaligns them so the deadzone can be felt with a real mouse.
+
 ## Releasing
 
 Versions are tagged with `release.sh`, which keeps the version number in sync across
