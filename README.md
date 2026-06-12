@@ -96,9 +96,9 @@ A `.deb` can be built directly with CPack (built into CMake). Build it on the
 machine that will run it (the plugin must match the installed KWin):
 
 ```sh
-sudo apt install build-essential cmake extra-cmake-modules kwin-dev \
+sudo apt install build-essential cmake pkg-config extra-cmake-modules kwin-dev \
   qt6-base-dev qt6-declarative-dev libkf6config-dev libkf6coreaddons-dev \
-  libkf6kcmutils-dev
+  libkf6kcmutils-dev libdrm-dev
 cmake -B build -DCMAKE_BUILD_TYPE=Release \
   -DKDE_INSTALL_QTPLUGINDIR=lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/qt6/plugins
 cmake --build build
