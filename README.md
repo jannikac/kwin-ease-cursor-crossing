@@ -1,5 +1,7 @@
 # kwin-ease-cursor-crossing
 
+<img width="1188" height="808" alt="image" src="https://github.com/user-attachments/assets/43e8f2fa-f9fd-4ac1-86c4-55e9d6cd02f0" />
+
 A third-party KWin plugin that fixes [KDE bug 517413](https://bugs.kde.org/show_bug.cgi?id=517413):
 on multi-monitor setups with different resolutions or scale factors, parts of the shared screen edge have no adjacent screen in the logical layout ("deadzones") and the cursor gets stuck there. This plugin detects the cursor being pushed into a deadzone and eases it across to the neighboring screen, similar to Windows 11's "Ease cursor movement between displays".
 
