@@ -37,6 +37,8 @@ KWin clamps the cursor to the current output's edge when the position beyond it 
 | -------------- | --------- | -------------------------------------------------------- |
 | 0.1.x          | 6.3 – 6.6 | 6.6.5 (Arch), 6.5 (NixOS), 6.4 (Kubuntu), 6.3 (Debian)   |
 
+**Hint:** Other KWin versions may work, i just haven't tested them.
+
 The API differences across 6.3–6.6 are small enough for type deduction to absorb,
 so one source tree covers the whole range. Future KWin versions may change the private API
 in ways that need explicit handling (version checks in CMake plus `#ifdef`s); the
