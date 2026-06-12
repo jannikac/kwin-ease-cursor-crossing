@@ -12,7 +12,14 @@
   kcoreaddons,
   kcmutils,
   kirigami,
-  src ? lib.cleanSourceWith {
+}:
+
+stdenv.mkDerivation {
+  pname = "kwin-ease-cursor-crossing";
+  version = "0.1.0";
+
+  # The repo this file lives in, minus VCS/build/packaging clutter
+  src = lib.cleanSourceWith {
     src = lib.cleanSource ../..;
     filter =
       path: type:
@@ -20,14 +27,7 @@
         "build"
         "dist"
       ]);
-  },
-}:
-
-stdenv.mkDerivation {
-  pname = "kwin-ease-cursor-crossing";
-  version = "0.1.0";
-
-  inherit src;
+  };
 
   nativeBuildInputs = [
     cmake
