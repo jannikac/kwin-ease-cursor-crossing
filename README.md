@@ -47,7 +47,27 @@ nix-build dist/nixos
 # result/lib/qt-6/plugins/kwin/plugins/easecursorcrossing.so
 ```
 
-To install, add the package to your `configuration.nix`:
+To install without a local checkout, fetch the repo directly in your
+`configuration.nix`:
+
+```nix
+{ pkgs, ... }:
+let
+  kwin-ease-cursor-crossing = builtins.fetchGit {
+    url = "https://github.com/jannikac/kwin-ease-cursor-crossing";
+    ref = "main";
+    # pin to a commit for reproducible builds; update the hash to pull in changes
+    rev = "<commit hash>";
+  };
+in
+{
+  environment.systemPackages = [
+    (pkgs.kdePackages.callPackage "${kwin-ease-cursor-crossing}/dist/nixos/package.nix" { })
+  ];
+}
+```
+
+Alternatively, with a local checkout of the repo:
 
 ```nix
 environment.systemPackages = [
@@ -55,7 +75,9 @@ environment.systemPackages = [
 ];
 ```
 
-then `sudo nixos-rebuild switch` and log out/in. 
+then `sudo nixos-rebuild switch` and log out/in. Because the plugin is built by
+your system's own `pkgs`, it always links against the exact KWin your session
+runs, and gets rebuilt automatically when a system update changes KWin.
 
 ### Install from source
 
