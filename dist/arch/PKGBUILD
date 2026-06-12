@@ -1,6 +1,6 @@
 # Maintainer: jannikac <jannikac@mailbox.org>
 pkgname=kwin-ease-cursor-crossing
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="KWin plugin that eases cursor movement between screens with mismatched edges (KDE bug 517413)"
 arch=('x86_64')

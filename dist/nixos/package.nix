@@ -16,7 +16,7 @@
 
 stdenv.mkDerivation {
   pname = "kwin-ease-cursor-crossing";
-  version = "0.1.0";
+  version = "0.1.1";
 
   # The repo this file lives in, minus VCS/build/packaging clutter
   src = lib.cleanSourceWith {
