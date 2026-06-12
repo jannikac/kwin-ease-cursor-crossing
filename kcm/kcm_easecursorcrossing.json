@@ -1,0 +1,11 @@
+{
+    "KPlugin": {
+        "Name": "Ease Cursor Crossing",
+        "Description": "Let the cursor cross between screens with mismatched edges",
+        "Icon": "input-mouse",
+        "EnabledByDefault": true
+    },
+    "X-KDE-System-Settings-Parent-Category": "display",
+    "X-KDE-Keywords": "mouse,cursor,multi-monitor,multiple monitors,screen edge,deadzone,stuck",
+    "X-KDE-Weight": 60
+}

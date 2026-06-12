@@ -1,0 +1,7 @@
+{
+    "KPlugin": {
+        "Name": "Ease Cursor Crossing",
+        "Description": "Lets the cursor cross between screens of different sizes instead of getting stuck in edge deadzones (KDE bug 517413)",
+        "EnabledByDefault": true
+    }
+}
