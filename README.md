@@ -9,14 +9,25 @@ KWin clamps the cursor to the current output's edge when the position beyond it 
 
 ## Requirements
 
-- KWin (Wayland) — builds against **KWin 6.5 and 6.6** from the same source; tested
-  against 6.6.5 on Arch Linux. The 6.5/6.6 API differences are small enough for type
-  deduction to absorb; future KWin versions may change the private API in ways that
-  require explicit handling (e.g. version checks in CMake with `#ifdef`s in the code)
+- KWin (Wayland) — see the compatibility table below; CMake enforces the supported
+  range at configure time, so building against an unsupported KWin fails with a clear
+  version error rather than compile errors
 - The plugin uses KWin's private API, which has no ABI stability: **rebuild it after
   every KWin update** (typically each Plasma release)
 - Build deps: `cmake`, `extra-cmake-modules`, `kwin` (Arch ships the private headers in
   the main package; on other distros install `kwin-devel`/`kwin-dev`)
+
+### KWin compatibility
+
+| Plugin version | KWin      |
+| -------------- | --------- |
+| 0.1.x          | 6.5 – 6.6 |
+
+The 6.5/6.6 API differences are small enough for type deduction to absorb, so one
+source tree covers the whole range. Future KWin versions may change the private API
+in ways that need explicit handling (version checks in CMake plus `#ifdef`s); the
+supported range lives in the `find_package(KWin ...)` call in `CMakeLists.txt` and
+should be widened only after verifying the build against the new release.
 
 ## Build & install
 
@@ -145,6 +156,19 @@ Active=true
 Threshold=15
 Mode=proportional
 ```
+
+## Releasing
+
+Versions are tagged with `release.sh`, which keeps the version number in sync across
+`CMakeLists.txt`, `dist/arch/PKGBUILD` (resetting `pkgrel` to 1), and
+`dist/nixos/package.nix`:
+
+```sh
+./release.sh 0.2.0          # bump versions, commit "release 0.2.0", tag v0.2.0
+git push && git push origin v0.2.0
+```
+
+The script requires a clean working tree and refuses to overwrite an existing tag.
 
 ## License
 
