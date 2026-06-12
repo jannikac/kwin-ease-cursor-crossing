@@ -88,7 +88,7 @@ bool EaseCursorCrossingFilter::pointerMotion(PointerMotionEvent *event)
     }
 
     const QPointF pos = event->position;
-    LogicalOutput *output = workspace()->outputAt(pos);
+    auto *output = workspace()->outputAt(pos);
     if (!output) {
         reset();
         return false;
@@ -124,7 +124,7 @@ bool EaseCursorCrossingFilter::pointerMotion(PointerMotionEvent *event)
     // soft edge barrier is intentionally holding the cursor) — only act on deadzones
     const QPointF probe = pos + dir * (s_pinEpsilon + 1.0);
     const auto outputs = workspace()->outputs();
-    for (const LogicalOutput *other : outputs) {
+    for (const auto *other : outputs) {
         if (QRectF(other->geometryF()).contains(probe)) {
             reset();
             return false;
@@ -154,11 +154,11 @@ bool EaseCursorCrossingFilter::tryEase(const QPointF &pos, const QPointF &outwar
     const bool horizontal = outwardDir.x() != 0;
 
     // nearest output on the far side of the pinned edge
-    LogicalOutput *best = nullptr;
+    decltype(workspace()->outputAt({})) best = nullptr;
     qreal bestPerpGap = 0.0;
     qreal bestParDist = 0.0;
     const auto outputs = workspace()->outputs();
-    for (LogicalOutput *candidate : outputs) {
+    for (auto *candidate : outputs) {
         const QRectF g = candidate->geometryF();
         qreal perpGap;
         if (horizontal) {
