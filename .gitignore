@@ -1,2 +1,7 @@
 build/
 .kwin-src/
+
+# makepkg artifacts
+dist/arch/src/
+dist/arch/pkg/
+dist/arch/*.pkg.tar.*

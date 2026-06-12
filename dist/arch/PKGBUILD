@@ -1,0 +1,24 @@
+# Maintainer: jannikac <jannikac@mailbox.org>
+pkgname=kwin-ease-cursor-crossing
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="KWin plugin that eases cursor movement between screens with mismatched edges (KDE bug 517413)"
+arch=('x86_64')
+url="https://bugs.kde.org/show_bug.cgi?id=517413"
+license=('GPL-2.0-only OR GPL-3.0-only')
+# Uses KWin's private API (no ABI stability): rebuild this package after every kwin update
+depends=('kwin' 'kcmutils' 'kirigami')
+makedepends=('cmake' 'extra-cmake-modules')
+options=('!debug')
+
+build() {
+  cmake -B build -S "$startdir/../.." \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DKDE_INSTALL_QTPLUGINDIR=lib/qt6/plugins
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}

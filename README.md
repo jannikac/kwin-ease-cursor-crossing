@@ -17,16 +17,49 @@ KWin clamps the cursor to the current output's edge when the position beyond it 
 
 ## Build & install
 
+### Arch Linux
+
+The repo ships a `PKGBUILD` that builds a proper pacman package from the working tree:
+
+```sh
+cd dist/arch
+makepkg -si
+```
+
+(`makepkg -si` builds the package and installs it via pacman in one step; use
+`makepkg -f` to rebuild after source changes, then `sudo pacman -U
+kwin-ease-cursor-crossing-*.pkg.tar.zst`.)
+
+Installing as a package means pacman tracks every file — uninstall cleanly with:
+
+```sh
+sudo pacman -R kwin-ease-cursor-crossing
+```
+
+Remember to rebuild and reinstall the package after every `kwin` update (see
+Requirements).
+
+### Install from source
+
 ```sh
 cmake -B build -DCMAKE_BUILD_TYPE=Release -DKDE_INSTALL_QTPLUGINDIR=lib/qt6/plugins
 cmake --build build
 sudo cmake --install build
 ```
 
-This installs `/usr/lib/qt6/plugins/kwin/plugins/easecursorcrossing.so` (the KWin
-plugin, next to KWin's built-in plugins) and
+### What gets installed
+
+Both methods install `/usr/lib/qt6/plugins/kwin/plugins/easecursorcrossing.so` (the
+KWin plugin, next to KWin's built-in plugins) and
 `/usr/lib/qt6/plugins/plasma/kcms/systemsettings/kcm_easecursorcrossing.so` (the
-System Settings module). Then restart KWin (log out/in). The settings module shows up in System Settings right away.
+System Settings module). Then restart KWin (log out/in) — or load the plugin into the
+running session without restarting:
+
+```sh
+qdbus6 org.kde.KWin /Plugins org.kde.KWin.Plugins.LoadPlugin easecursorcrossing
+```
+
+The settings module shows up in System Settings right away.
 
 The plugin is enabled by default once installed. To disable it without uninstalling, add
 to `~/.config/kwinrc`:
