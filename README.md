@@ -114,6 +114,29 @@ compatibility table).
 
 ### Install from source
 
+#### Prerequisites
+
+- a C++23 compiler and `cmake` + `extra-cmake-modules`
+- Qt 6 development files: Base and Declarative
+- KDE Frameworks 6 development files: KConfig, KCoreAddons, KCMUtils
+- KWin development files (the private API headers and CMake config)
+- some distros need `pkg-config` and the libdrm headers, which KWin's headers
+  pull in
+
+Package names differ per distro; the Debian/Ubuntu list covers exactly these
+and can serve as a reference for finding your distro's equivalents:
+
+```sh
+sudo apt install build-essential cmake pkg-config extra-cmake-modules kwin-dev \
+  qt6-base-dev qt6-declarative-dev libkf6config-dev libkf6coreaddons-dev \
+  libkf6kcmutils-dev libdrm-dev
+```
+
+On Arch, `cmake`, `extra-cmake-modules`, and `kwin` suffice (the private
+headers ship in the main `kwin` package).
+
+#### Build & install
+
 ```sh
 cmake -B build -DCMAKE_BUILD_TYPE=Release -DKDE_INSTALL_QTPLUGINDIR=lib/qt6/plugins
 cmake --build build
