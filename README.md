@@ -3,6 +3,20 @@
 A third-party KWin plugin that fixes [KDE bug 517413](https://bugs.kde.org/show_bug.cgi?id=517413):
 on multi-monitor setups with different resolutions or scale factors, parts of the shared screen edge have no adjacent screen in the logical layout ("deadzones") and the cursor gets stuck there. This plugin detects the cursor being pushed into a deadzone and eases it across to the neighboring screen, similar to Windows 11's "Ease cursor movement between displays".
 
+## Quickstart
+
+1. Check that your KWin version is supported (see the
+   [compatibility table](#kwin-compatibility)).
+2. Build and install the plugin for your distro:
+   - [Arch Linux](#arch-linux) — pacman package via the `PKGBUILD` under `dist/arch`
+   - [NixOS](#nixos) — Nix expression under `dist/nixos`
+   - [Debian / Ubuntu / KDE Neon](#debian--ubuntu--kde-neon) — `.deb` via CPack
+   - anything else: [install from source](#install-from-source)
+3. Log out and back in.
+4. Done — the cursor now crosses misaligned screen edges after a short push.
+   Tweak the behavior under **System Settings → Display & Monitor → Ease
+   Cursor Crossing** (see [Configuration](#configuration)).
+
 ## How it works
 
 KWin clamps the cursor to the current output's edge when the position beyond it is not covered by any output. The plugin installs a `KWin::InputEventFilter` that watches pointer motion: when the cursor is pinned at an edge, the user keeps pushing outward, and no output exists just beyond that edge (so neither normal crossing nor the soft edge barrier applies), it accumulates the outward motion. Past a threshold it warps the cursor onto the nearest output on the far side of that edge. Pointer constraints held by applications (games, VMs) are respected and synthetic warps are ignored.
@@ -149,14 +163,8 @@ All methods install `lib/qt6/plugins/kwin/plugins/easecursorcrossing.so` (the
 KWin plugin, next to KWin's built-in plugins) and
 `lib/qt6/plugins/plasma/kcms/systemsettings/kcm_easecursorcrossing.so` (the
 System Settings module) — under `/usr` on Arch, under the package's store path
-(plugin dir `lib/qt-6/plugins`) on NixOS. Then restart KWin (log out/in) — or load the plugin into the
-running session without restarting:
-
-```sh
-qdbus6 org.kde.KWin /Plugins org.kde.KWin.Plugins.LoadPlugin easecursorcrossing
-```
-
-The settings module shows up in System Settings right away.
+(plugin dir `lib/qt-6/plugins`) on NixOS. Then restart KWin (log out/in). The
+settings module shows up in System Settings right away.
 
 The plugin is enabled by default once installed. To disable it without uninstalling, add
 to `~/.config/kwinrc`:
