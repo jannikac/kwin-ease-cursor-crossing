@@ -8,12 +8,12 @@ on multi-monitor setups with different resolutions or scale factors, parts of th
 1. Check that your KWin version is supported (see the
    [compatibility table](#kwin-compatibility)).
 2. Build and install the plugin for your distro:
-   - [Arch Linux](#arch-linux) — pacman package via the `PKGBUILD` under `dist/arch`
-   - [NixOS](#nixos) — Nix expression under `dist/nixos`
-   - [Debian / Ubuntu / KDE Neon](#debian--ubuntu--kde-neon) — `.deb` via CPack
+   - [Arch Linux](#arch-linux): pacman package via the `PKGBUILD` under `dist/arch`
+   - [NixOS](#nixos): Nix expression under `dist/nixos`
+   - [Debian / Ubuntu / KDE Neon](#debian--ubuntu--kde-neon): `.deb` via CPack
    - anything else: [install from source](#install-from-source)
 3. Log out and back in.
-4. Done — the cursor now crosses misaligned screen edges after a short push.
+4. Done! The cursor now crosses misaligned screen edges after a short push.
    Tweak the behavior under **System Settings → Display & Monitor → Ease
    Cursor Crossing** (see [Configuration](#configuration)).
 
@@ -23,7 +23,7 @@ KWin clamps the cursor to the current output's edge when the position beyond it 
 
 ## Requirements
 
-- KWin (Wayland) — see the compatibility table below; CMake enforces the supported
+- KWin (Wayland): see the compatibility table below; CMake enforces the supported
   range at configure time, so building against an unsupported KWin fails with a clear
   version error rather than compile errors
 - The plugin uses KWin's private API, which has no ABI stability: **rebuild it after
@@ -121,8 +121,8 @@ sudo apt install ./kwin-ease-cursor-crossing_*.deb
 ```
 
 Runtime dependencies are resolved automatically from the linked libraries
-(`dpkg-shlibdeps`), and `apt` tracks the installed files — uninstall with
-`sudo apt remove kwin-ease-cursor-crossing`. If `apt` cannot find `kwin-dev`,
+(`dpkg-shlibdeps`), and `apt` tracks the installed files, so you can uninstall
+with `sudo apt remove kwin-ease-cursor-crossing`. If `apt` cannot find `kwin-dev`,
 your release likely ships a KWin older than the supported range (see the
 compatibility table).
 
@@ -162,7 +162,7 @@ sudo cmake --install build
 All methods install `lib/qt6/plugins/kwin/plugins/easecursorcrossing.so` (the
 KWin plugin, next to KWin's built-in plugins) and
 `lib/qt6/plugins/plasma/kcms/systemsettings/kcm_easecursorcrossing.so` (the
-System Settings module) — under `/usr` on Arch, under the package's store path
+System Settings module), under `/usr` on Arch and under the package's store path
 (plugin dir `lib/qt-6/plugins`) on NixOS. Then restart KWin (log out/in). The
 settings module shows up in System Settings right away.
 
@@ -181,7 +181,7 @@ easecursorcrossingEnabled=false
 The project ships a System Settings module: **System Settings → Display & Monitor →
 Ease Cursor Crossing** (or just search for "cursor crossing"). It has a checkbox to
 toggle the behavior plus the edge-barrier and crossing-position settings. Changes
-apply immediately to the running session — the plugin watches `kwinrc` live.
+apply immediately to the running session; the plugin watches `kwinrc` live.
 
 The **Edge barrier** setting works like the edge barrier option in **Display &
 Monitor → Screen Edges**: it is the distance (in logical pixels) you have to push
@@ -265,3 +265,8 @@ The script requires a clean working tree and refuses to overwrite an existing ta
 ## License
 
 GPL-2.0-only OR GPL-3.0-only OR LicenseRef-KDE-Accepted-GPL
+
+## AI usage
+
+Most of the code in this project was generated with Claude (Fable 5). All
+testing was done manually in VMs against the supported KWin versions.
