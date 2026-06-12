@@ -44,3 +44,14 @@ target_link_libraries(easecursorcrossing PRIVATE
     KF6::ConfigCore
     KF6::CoreAddons
 )
+
+# .deb packaging via `cpack -G DEB --config build/CPackConfig.cmake` (see README)
+set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set(CPACK_PACKAGE_CONTACT "jannikac <jannikac@mailbox.org>")
+set(CPACK_PACKAGE_HOMEPAGE_URL "https://github.com/jannikac/kwin-ease-cursor-crossing")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "KWin plugin easing cursor movement between mismatched screen edges")
+set(CPACK_DEBIAN_PACKAGE_SECTION "kde")
+set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
+# resolve runtime dependencies from the linked libraries on the build machine
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+include(CPack)

@@ -90,6 +90,29 @@ then `sudo nixos-rebuild switch` and log out/in. Because the plugin is built by
 your system's own `pkgs`, it always links against the exact KWin your session
 runs, and gets rebuilt automatically when a system update changes KWin.
 
+### Debian / Ubuntu / KDE Neon
+
+A `.deb` can be built directly with CPack (built into CMake). Build it on the
+machine that will run it (the plugin must match the installed KWin):
+
+```sh
+sudo apt install build-essential cmake pkg-config extra-cmake-modules kwin-dev \
+  qt6-base-dev qt6-declarative-dev libkf6config-dev libkf6coreaddons-dev \
+  libkf6kcmutils-dev libdrm-dev
+cmake -B build -DCMAKE_BUILD_TYPE=Release \
+  -DKDE_INSTALL_QTPLUGINDIR=lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/qt6/plugins
+cmake --build build
+cpack -G DEB --config build/CPackConfig.cmake
+sudo apt install ./kwin-ease-cursor-crossing_*.deb
+```
+
+Runtime dependencies are resolved automatically from the linked libraries
+(`dpkg-shlibdeps`), and `apt` tracks the installed files — uninstall with
+`sudo apt remove kwin-ease-cursor-crossing`. Note that Plasma 6.5+ is only
+available in newer releases (Debian 14/forky, recent Ubuntu/Neon); if `apt`
+cannot find `kwin-dev`, your release likely ships a KWin older than the
+supported range.
+
 ### Install from source
 
 ```sh
