@@ -1,5 +1,7 @@
 # kwin-ease-cursor-crossing
 
+<img width="1188" height="808" alt="image" src="https://github.com/user-attachments/assets/43e8f2fa-f9fd-4ac1-86c4-55e9d6cd02f0" />
+
 A third-party KWin plugin that fixes [KDE bug 517413](https://bugs.kde.org/show_bug.cgi?id=517413):
 on multi-monitor setups with different resolutions or scale factors, parts of the shared screen edge have no adjacent screen in the logical layout ("deadzones") and the cursor gets stuck there. This plugin detects the cursor being pushed into a deadzone and eases it across to the neighboring screen, similar to Windows 11's "Ease cursor movement between displays".
 
@@ -36,12 +38,14 @@ KWin clamps the cursor to the current output's edge when the position beyond it 
 
 ### KWin compatibility
 
-| Plugin version | KWin      | Verified on                                              |
-| -------------- | --------- | -------------------------------------------------------- |
-| 0.2.x          | 6.3 – 6.7 | 6.7.2 (Arch), 6.5 (NixOS), 6.4 (Kubuntu), 6.3 (Debian)   |
-| 0.1.x          | 6.3 – 6.6 | 6.6.5 (Arch), 6.5 (NixOS), 6.4 (Kubuntu), 6.3 (Debian)   |
+| Plugin version | KWin      | Verified on                                            |
+| -------------- | --------- | ------------------------------------------------------ |
+| 0.2.x          | 6.3 – 6.7 | 6.7.2 (Arch), 6.5 (NixOS), 6.4 (Kubuntu), 6.3 (Debian) |
+| 0.1.x          | 6.3 – 6.6 | 6.6.5 (Arch), 6.5 (NixOS), 6.4 (Kubuntu), 6.3 (Debian) |
 
-The API differences across 6.3–6.7 are small enough for type deduction to absorb,
+**Hint:** Other KWin versions may work, i just haven't tested them.
+
+The API differences across 6.3–6.6 are small enough for type deduction to absorb,
 so one source tree covers the whole range. Future KWin versions may change the private API
 in ways that need explicit handling (version checks in CMake plus `#ifdef`s); the
 supported range lives in the `find_package(KWin ...)` call in `CMakeLists.txt` and
