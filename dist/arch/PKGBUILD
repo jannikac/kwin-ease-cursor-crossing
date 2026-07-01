@@ -8,7 +8,7 @@ url="https://bugs.kde.org/show_bug.cgi?id=517413"
 license=('GPL-2.0-only OR GPL-3.0-only')
 # Uses KWin's private API (no ABI stability): rebuild this package after every kwin update
 depends=('kwin' 'kcmutils' 'kirigami')
-makedepends=('cmake' 'extra-cmake-modules')
+makedepends=('cmake' 'extra-cmake-modules' 'vulkan-headers')
 options=('!debug')
 
 build() {

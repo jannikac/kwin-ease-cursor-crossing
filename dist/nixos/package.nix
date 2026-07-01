@@ -12,6 +12,7 @@
   kcoreaddons,
   kcmutils,
   kirigami,
+  vulkan-headers,
 }:
 
 stdenv.mkDerivation {
@@ -42,6 +43,8 @@ stdenv.mkDerivation {
     kcoreaddons
     kcmutils
     kirigami
+    # KWin's CMake config requires the Vulkan headers from 6.7 on
+    vulkan-headers
   ];
 
   # Only plugins are installed, no executables to wrap

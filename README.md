@@ -30,14 +30,18 @@ KWin clamps the cursor to the current output's edge when the position beyond it 
   every KWin update** (typically each Plasma release)
 - Build deps: `cmake`, `extra-cmake-modules`, `kwin` (Arch ships the private headers in
   the main package; on other distros install `kwin-devel`/`kwin-dev`)
+- From KWin 6.7 on, the Vulkan headers are also required at build time
+  (`vulkan-headers` on Arch, `libvulkan-dev` on Debian/Ubuntu): KWin's CMake config
+  gained a hard dependency on them in 6.7
 
 ### KWin compatibility
 
 | Plugin version | KWin      | Verified on                                              |
 | -------------- | --------- | -------------------------------------------------------- |
+| 0.2.x          | 6.3 – 6.7 | 6.7.2 (Arch), 6.5 (NixOS), 6.4 (Kubuntu), 6.3 (Debian)   |
 | 0.1.x          | 6.3 – 6.6 | 6.6.5 (Arch), 6.5 (NixOS), 6.4 (Kubuntu), 6.3 (Debian)   |
 
-The API differences across 6.3–6.6 are small enough for type deduction to absorb,
+The API differences across 6.3–6.7 are small enough for type deduction to absorb,
 so one source tree covers the whole range. Future KWin versions may change the private API
 in ways that need explicit handling (version checks in CMake plus `#ifdef`s); the
 supported range lives in the `find_package(KWin ...)` call in `CMakeLists.txt` and
@@ -124,7 +128,8 @@ Runtime dependencies are resolved automatically from the linked libraries
 (`dpkg-shlibdeps`), and `apt` tracks the installed files, so you can uninstall
 with `sudo apt remove kwin-ease-cursor-crossing`. If `apt` cannot find `kwin-dev`,
 your release likely ships a KWin older than the supported range (see the
-compatibility table).
+compatibility table). If your release ships KWin 6.7 or newer, also install
+`libvulkan-dev` (see [Requirements](#requirements)).
 
 ### Install from source
 
@@ -136,6 +141,8 @@ compatibility table).
 - KWin development files (the private API headers and CMake config)
 - some distros need `pkg-config` and the libdrm headers, which KWin's headers
   pull in
+- the Vulkan headers when building against KWin 6.7 or newer (see
+  [Requirements](#requirements))
 
 Package names differ per distro; the Debian/Ubuntu list covers exactly these
 and can serve as a reference for finding your distro's equivalents:
